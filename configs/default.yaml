@@ -1,0 +1,57 @@
+# Default configuration. Any value can be overridden on the command line with
+#   --set section.key=value        (e.g. --set train.epochs=5 --set model.attention=false)
+# Relative paths are resolved against the project directory (not the shell's CWD).
+
+seed: 42                       # data split, weight init of new layers, shuffling, augmentation
+
+data:
+  # Folders that directly contain the class sub-folders. Override with --rgb_root / --sar_root,
+  # or the environment variables EUROSAT_RGB_ROOT / EUROSAT_SAR_ROOT.
+  rgb_root: data/EuroSAT_RGB
+  sar_root: data/EuroSAT-SAR
+  split_dir: splits
+  cache_dir: cache             # .npz caches of decoded images (safe to delete)
+  use_cache: true
+  ratios: [0.70, 0.15, 0.15]   # train / val / test, stratified by class, split over PAIRS
+  sar_channels: 2              # EuroSAT-SAR = dual-pol Sentinel-1
+  pairing: instance            # instance: true (class, stem) pairs | class: random same-class partner
+  io_threads: 8
+
+model:
+  input_size: 128              # 64x64 patches are bilinearly upsampled; VGG-16 map = 512x4x4
+  emb_dim: 128                 # shared embedding dimension (paper: 128)
+  hidden_dim: 512
+  dropout: 0.3
+  pretrained: true             # ImageNet VGG-16 (downloaded by torchvision on first training run)
+  attention: true              # false = ablation without SAR-derived attention
+
+loss:
+  reduction: mean              # mean | sum  (see losses.py)
+  w1: 1.0
+  w2: 1.0
+  w3: 1.0
+  w4: 1.0
+  aux: 1.0                     # pair-free RGB path (CE + attention distillation)
+
+train:
+  epochs: 50                   # paper: ~40-50
+  batch_size: 64               # paper: 128 (reduced for a 6 GB GPU at 128x128 input)
+  lr: 0.001                    # paper
+  momentum: 0.9
+  weight_decay: 0.0005
+  grad_clip: 5.0
+  amp: true                    # mixed precision on CUDA
+  augment: true                # random flips / transpose (train only)
+  eval_batch_size: 128
+  select_by: val_map           # val_map | val_loss  (which epoch is saved as best.pt)
+
+output:
+  exp_name: ""                 # non-empty => checkpoints/<exp>/, plots/<exp>/
+  checkpoint_dir: checkpoints
+  plot_dir: plots
+  report_dir: reports
+
+test:
+  test_dir: test_dataset       # contains RGB/<class>/<stem>.jpg and SAR/<class>/<stem>.tif
+  checkpoint: checkpoints/best.pt
+  l2_normalize: false          # paper uses plain Euclidean distance

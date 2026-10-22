@@ -1,0 +1,105 @@
+{
+  "config": {
+    "seed": 42,
+    "data": {
+      "rgb_root": "C:\\Users\\adity\\Downloads\\cross-modal-retrieval\\data\\EuroSAT_RGB",
+      "sar_root": "C:\\Users\\adity\\Downloads\\cross-modal-retrieval\\data\\EuroSAT-SAR",
+      "split_dir": "splits",
+      "cache_dir": "cache",
+      "use_cache": true,
+      "ratios": [
+        0.7,
+        0.15,
+        0.15
+      ],
+      "sar_channels": 2,
+      "pairing": "instance",
+      "io_threads": 8
+    },
+    "model": {
+      "input_size": 128,
+      "emb_dim": 128,
+      "hidden_dim": 512,
+      "dropout": 0.3,
+      "pretrained": true,
+      "attention": true
+    },
+    "loss": {
+      "reduction": "mean",
+      "w1": 1.0,
+      "w2": 1.0,
+      "w3": 1.0,
+      "w4": 1.0,
+      "aux": 1.0
+    },
+    "train": {
+      "epochs": 1,
+      "batch_size": 8,
+      "lr": 0.001,
+      "momentum": 0.9,
+      "weight_decay": 0.0005,
+      "grad_clip": 5.0,
+      "amp": true,
+      "augment": true,
+      "eval_batch_size": 128,
+      "select_by": "val_map"
+    },
+    "output": {
+      "exp_name": "smoke",
+      "checkpoint_dir": "checkpoints",
+      "plot_dir": "plots",
+      "report_dir": "reports"
+    },
+    "test": {
+      "test_dir": "test_dataset",
+      "checkpoint": "checkpoints/best.pt",
+      "l2_normalize": false
+    }
+  },
+  "seed": 42,
+  "best": {
+    "score": 0.16114207105989747,
+    "epoch": 1,
+    "val_map_mean": 0.16114207105989747,
+    "val_map_rgb2sar": 0.1566674520038175,
+    "val_map_sar2rgb": 0.16561669011597743,
+    "val_total": 4.569124794006347
+  },
+  "epochs_run": 1,
+  "split_sizes": {
+    "train": 18900,
+    "val": 4050,
+    "test": 4050
+  },
+  "sar_stats": {
+    "lo": [
+      -27.893072605133057,
+      -40.11207153320312
+    ],
+    "hi": [
+      2.9755792355537465,
+      -5.818972182273864
+    ],
+    "mean": [
+      -11.502332374303725,
+      -18.40166976470494
+    ],
+    "std": [
+      5.556791626006069,
+      6.004864745979635
+    ]
+  },
+  "n_params": 30415306,
+  "train_seconds": 81.23383355140686,
+  "env": {
+    "python": "3.11.9",
+    "platform": "Windows-10-10.0.26300-SP0",
+    "numpy": "2.4.6",
+    "torch": "2.12.0+cu132",
+    "cuda_available": true,
+    "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+    "torchvision": "0.27.0+cu132"
+  },
+  "checkpoint": "C:\\Users\\adity\\Downloads\\cross-modal-retrieval\\checkpoints\\smoke\\best.pt",
+  "plots": "C:\\Users\\adity\\Downloads\\cross-modal-retrieval\\plots\\smoke"
+}

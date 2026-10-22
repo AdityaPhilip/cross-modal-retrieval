@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.py[cod]
+.env
+data/
+test_dataset/
+checkpoints/
+cache/
+zip_contents.txt

@@ -1,0 +1,61 @@
+{
+  "file_pairing": {
+    "n_rgb": 27000,
+    "n_sar": 27000,
+    "n_matched": 27000,
+    "n_rgb_only": 0,
+    "n_sar_only": 0,
+    "rgb_only_examples": [],
+    "sar_only_examples": [],
+    "classes": [
+      "AnnualCrop",
+      "Forest",
+      "HerbaceousVegetation",
+      "Highway",
+      "Industrial",
+      "Pasture",
+      "PermanentCrop",
+      "Residential",
+      "River",
+      "SeaLake"
+    ]
+  },
+  "sar_stats_sample": {
+    "shape": [
+      600,
+      2,
+      64,
+      64
+    ],
+    "dtype": "float32",
+    "channels": [
+      {
+        "min": -51.56850814819336,
+        "p1": -48.448787727355956,
+        "median": -11.329429626464844,
+        "p99": 2.47542279005051,
+        "max": 34.11568069458008
+      },
+      {
+        "min": -76.48280334472656,
+        "p1": -48.449039459228516,
+        "median": -17.8914155960083,
+        "p99": -6.574342212676998,
+        "max": 21.448246002197266
+      }
+    ]
+  },
+  "pairing_sanity": {
+    "n_pairs_checked": 600,
+    "intensity": {
+      "mean_abs_corr_true": 0.18881583489009615,
+      "mean_abs_corr_shuffled": 0.08525468311517613,
+      "frac_true_gt_shuffled": 0.7316666666666667
+    },
+    "gradient": {
+      "mean_abs_corr_true": 0.07092135519660524,
+      "mean_abs_corr_shuffled": 0.02609189947527756,
+      "frac_true_gt_shuffled": 0.7516666666666667
+    }
+  }
+}
